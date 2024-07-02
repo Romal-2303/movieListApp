@@ -1,0 +1,12 @@
+// make scrollable and hide scrollbar
+.hide-scrollbar {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+  }
+}

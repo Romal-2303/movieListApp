@@ -1,0 +1,15 @@
+@import "../../../DesignSystem/library";
+
+.header-container {
+  padding-bottom: 0.8rem;
+  // padding-right: 0rem;
+  background-color: $primary-color;
+
+  .header-logo-container {
+    padding: 0.6rem;
+  }
+
+  .header-tabbed-container {
+    margin-top: 0.9rem;
+  }
+}

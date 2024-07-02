@@ -1,0 +1,26 @@
+@import "../../DesignSystem/library";
+
+.tabbed-component-container {
+  display: flex;
+  gap: 0.5rem;
+  color: $font-primary;
+  padding: 0rem 0.6rem;
+
+  .tab-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // font-family: $font-primary;
+    background-color: $primary-light;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .active-tab-element {
+    font-weight: 600;
+    background-color: $secondary-color;
+  }
+}
