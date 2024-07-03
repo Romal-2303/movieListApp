@@ -8,6 +8,7 @@ import { selectGenreListResponse } from "../../../Redux/Slices/GenreList/getGenr
 import { getGenreListAction } from "../../../Redux/Slices/GenreList/getGenreList.slice.ts";
 import { getMovieData } from "../../../Redux/Slices/MovieList/getMovieData.slice.ts";
 import useLoader from "../../../Hooks/useLoader.ts";
+import { setFilterData } from "../../../Redux/Slices/filterSlice/filter.slice.ts";
 
 interface HeaderProps {
   startLoading: () => void;
@@ -50,6 +51,8 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
               let idString = recIndexArr.map(
                 (el) => genreListData?.genres[el - 1]?.id
               );
+
+              dispatch(setFilterData(idString));
 
               dispatch(
                 getMovieData({

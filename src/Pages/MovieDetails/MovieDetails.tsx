@@ -42,7 +42,6 @@ const MovieDetails = () => {
       (el) => el.job === "Director"
     );
     if (tempDirectorDetails && tempDirectorDetails.length > 0) {
-      console.log(tempDirectorDetails);
       setDirectorDetails(tempDirectorDetails[0]);
     } else {
       setDirectorDetails({});
@@ -65,8 +64,6 @@ const MovieDetails = () => {
       state: {},
     });
   };
-
-  console.log(castDetails);
 
   return (
     <>

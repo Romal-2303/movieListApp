@@ -5,9 +5,10 @@ import Loader from "../../Components/Loader/Loader.tsx";
 import Card from "../../Components/Card/Card.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovieData } from "../../Redux/Slices/MovieList/getMovieData.slice.ts";
-import { AppDispatch } from "../../Redux/store.ts";
+import { AppDispatch, RootState } from "../../Redux/store.ts";
 import { selectMovieDataResponse } from "../../Redux/Slices/MovieList/getMovieData.selector.ts";
 import { selectGenreListResponse } from "../../Redux/Slices/GenreList/getGenreList.selector.ts";
+import { setFilterData } from "../../Redux/Slices/filterSlice/filter.slice.ts";
 
 interface MainContentProps {
   isLoading: boolean;
@@ -25,14 +26,28 @@ const MainContent = ({
   const movieData = useSelector(selectMovieDataResponse);
   const genreListData = useSelector(selectGenreListResponse);
 
+  const tempFilterData = useSelector(
+    (state: RootState) => state.filterDataSlice.filterData
+  );
+
   useEffect(() => {
     startLoading();
-    dispatch(getMovieData({}))
-      .then(() => {})
-      .catch(() => {})
-      .finally(() => {
-        stopLoading();
-      });
+
+    if (tempFilterData && tempFilterData.length > 0) {
+      dispatch(getMovieData({ with_genres: tempFilterData.join(",") }))
+        .then(() => {})
+        .catch(() => {})
+        .finally(() => {
+          stopLoading();
+        });
+    } else {
+      dispatch(getMovieData({}))
+        .then(() => {})
+        .catch(() => {})
+        .finally(() => {
+          stopLoading();
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -62,8 +77,6 @@ const MainContent = ({
       return [...tempMoviesDataList];
     });
   }, [movieData, genreListData]);
-
-  console.log(moviesDataList);
 
   return (
     <div
