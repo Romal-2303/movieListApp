@@ -3,12 +3,14 @@ import Header from "./Header/Header.tsx";
 
 interface LayoutProps {
   children: ReactNode;
+  startLoading: () => void;
+  stopLoading: () => void;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, startLoading, stopLoading }: LayoutProps) => {
   return (
     <>
-      <Header />
+      <Header startLoading={startLoading} stopLoading={stopLoading} />
       {children}
     </>
   );

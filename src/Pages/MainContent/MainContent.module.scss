@@ -1,5 +1,27 @@
-.movies-list-container {
-  .loader-container {
-    margin-top: 4rem;
+@import "../../DesignSystem/library";
+
+.main-content-container {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  max-height: calc(100vh - 120px - 3rem);
+  font-family: $font-secondary;
+
+  .movies-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    .loader-container {
+      margin-top: 4rem;
+      height: 100vw;
+    }
+  }
+  .movie-year {
+    font-size: 20px;
+    font-weight: 600;
+    color: $font-primary-color;
+    margin-left: 1rem;
+    letter-spacing: 1px;
   }
 }

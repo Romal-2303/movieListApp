@@ -1,9 +1,13 @@
 @import "../../../DesignSystem/library";
 
 .header-container {
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  position: -webkit-sticky;
   padding-bottom: 0.8rem;
-  // padding-right: 0rem;
   background-color: $primary-color;
+  height: 120px;
 
   .header-logo-container {
     padding: 0.6rem;

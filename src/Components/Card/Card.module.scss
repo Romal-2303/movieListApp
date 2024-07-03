@@ -1,0 +1,66 @@
+@import "../../DesignSystem//library";
+
+.card-container {
+  width: 158px;
+  height: 222px;
+  color: $font-primary-color;
+  font-family: $font-secondary;
+  font-weight: 600;
+  position: relative;
+  cursor: pointer;
+
+  .card-maincontent {
+    height: 100%;
+  }
+  .card-footer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    margin-left: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .movie-desc {
+      .genres-container {
+        line-height: 1.5rem;
+      }
+
+      .details-btn-container {
+        button {
+          border: none;
+          color: $font-primary-color;
+          background-color: $secondary-color;
+          padding: 0.6rem 1rem;
+          font-weight: 600;
+          letter-spacing: 1px;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .titleAndRatings {
+      .title {
+        font-size: 14px;
+      }
+      .ratings {
+        font-size: 12px;
+        margin-top: -0.5rem;
+      }
+    }
+  }
+
+  .card-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.568);
+  }
+}
