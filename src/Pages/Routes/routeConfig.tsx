@@ -14,7 +14,7 @@ export const routes: typeRoutesConfig[] = [
     component: MainContent,
   },
   {
-    path: "/MovieDetails?id=:id",
+    path: "/MovieDetails/:id",
     component: MovieDetails,
   },
 ];

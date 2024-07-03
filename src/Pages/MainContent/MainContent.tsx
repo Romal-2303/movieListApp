@@ -63,6 +63,8 @@ const MainContent = ({
     });
   }, [movieData, genreListData]);
 
+  console.log(moviesDataList);
+
   return (
     <div
       className={`${classes["main-content-container"]} ${styles["hide-scrollbar"]}`}
@@ -79,6 +81,7 @@ const MainContent = ({
           moviesDataList.map((movie: any) => (
             <div>
               <Card
+                movieId={movie?.id}
                 image={movie?.poster_path}
                 ratings={movie?.vote_average}
                 title={movie?.title}

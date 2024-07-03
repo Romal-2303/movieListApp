@@ -3,6 +3,7 @@ import classes from "./Card.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const Card = ({
+  movieId = 123,
   title = "Don't Breathe",
   ratings = 8,
   image,
@@ -17,8 +18,7 @@ const Card = ({
   };
 
   const detailsClickHandler = () => {
-    console.log("Clicked");
-    naviage("/MovieDetails?id=123", {
+    naviage(`/MovieDetails/${movieId}`, {
       state: {},
     });
   };

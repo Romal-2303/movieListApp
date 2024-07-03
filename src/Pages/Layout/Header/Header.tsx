@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Header.module.scss";
-import { ReactComponent as Logo } from "../../../assets/icons/Group.svg";
+import { ReactComponent as Logo } from "../../../assets/icons/logo.svg";
 import TabbedComponent from "../../../Components/TabbedComponent/TabbedComponent.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../Redux/store.ts";

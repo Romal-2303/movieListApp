@@ -14,9 +14,19 @@ const getGenreList = () => {
   return `https://api.themoviedb.org/3/genre/movie/list?api_key=2dca580c2a14b55200e784d157207b4d&language=en-US`;
 };
 
+const getMovieDetails = (id: number) => {
+  return `https://api.themoviedb.org/3/movie/${id}?api_key=2dca580c2a14b55200e784d157207b4d`;
+};
+
+const getMovieCredits = (id: number) => {
+  return `https://api.themoviedb.org/3/movie/${id}/credits?api_key=2dca580c2a14b55200e784d157207b4d`;
+};
+
 const path = {
   getMovieList,
   getGenreList,
+  getMovieDetails,
+  getMovieCredits
 };
 
 export default path;

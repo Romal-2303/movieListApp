@@ -1,0 +1,116 @@
+.movie-info-container {
+  padding: 1rem;
+  height: calc(100vh - 120px - 3rem);
+  color: white;
+
+  .back-icon-container {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .movie-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .movie-img {
+      height: 200px;
+      width: 150px;
+    }
+  }
+
+  .movie-desc-container {
+    .movie-title-container {
+      text-align: center;
+      .movie-title {
+        width: 100%;
+        font-size: 25px;
+        font-weight: 600;
+      }
+      .movie-date {
+        font-size: 13px;
+        margin-top: -0.9rem;
+      }
+      .movie-genre {
+        font-size: 13px;
+        margin-top: -0.6rem;
+      }
+    }
+    .movie-overview {
+      font-size: 13px;
+      font-weight: lighter;
+      color: #8a8a8a;
+      letter-spacing: 0.5px;
+      line-height: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .partitioner {
+    border-bottom: 1px solid rgb(185, 185, 185);
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .movie-director-container {
+    .director-info-container {
+      display: flex;
+      width: 100%;
+      .director-image-container {
+        height: 100px;
+        width: 100px;
+
+        .movie-img {
+          border-radius: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .director-details-container {
+        margin-left: 1.8rem;
+
+        .director-name {
+          font-size: 16px;
+        }
+        .director-text {
+          font-size: 14px;
+          margin-top: -0.7rem;
+          color: #c8c8c8;
+        }
+      }
+    }
+  }
+
+  .movie-cast-container {
+    .movie-cast-details-container {
+      display: flex;
+      margin-top: 1.5rem;
+      .cast-image-container {
+        height: 100px;
+        width: 100px;
+        .cast-img {
+          border-radius: 100%;
+          object-fit: cover;
+        }
+      }
+      .cast-details-container {
+        margin-left: 1.8rem;
+
+        .cast-original-name {
+          font-size: 16px;
+        }
+
+        .cast-character-name {
+          font-size: 14px;
+          margin-top: -0.7rem;
+          color: #c8c8c8;
+        }
+      }
+    }
+  }
+}
+
+.loader-container {
+  margin-top: 5rem;
+}
