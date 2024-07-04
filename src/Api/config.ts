@@ -1,6 +1,8 @@
 const getMovieList = (
   sort_by: string = "popularity.desc",
   primary_release_year: number = 2012,
+  primary_release_year_lte: string = "2012-12-31",
+  primary_release_year_gte: string = "2012-01-01",
   page: number = 1,
   vote_count_gte: number = 100,
   with_genres?: string
@@ -26,7 +28,7 @@ const path = {
   getMovieList,
   getGenreList,
   getMovieDetails,
-  getMovieCredits
+  getMovieCredits,
 };
 
 export default path;

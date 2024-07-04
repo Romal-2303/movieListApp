@@ -8,6 +8,8 @@ import { initialStateApi } from "../../utils.ts";
 type payloadType = {
   sort_by?: string;
   primary_release_year?: number;
+  primary_release_year_lte?: string;
+  primary_release_year_gte?: string;
   page?: number;
   vote_count_gte?: number;
   with_genres?: string;
@@ -16,7 +18,15 @@ type payloadType = {
 export const getMovieData: AsyncThunk<any, payloadType, {}> = createAsyncThunk(
   "getMovieData",
   async (
-    { sort_by, primary_release_year, page, vote_count_gte, with_genres },
+    {
+      sort_by,
+      primary_release_year,
+      primary_release_year_lte,
+      primary_release_year_gte,
+      page,
+      vote_count_gte,
+      with_genres,
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -24,6 +34,8 @@ export const getMovieData: AsyncThunk<any, payloadType, {}> = createAsyncThunk(
         api.config.getMovieList(
           sort_by,
           primary_release_year,
+          primary_release_year_lte,
+          primary_release_year_gte,
           page,
           vote_count_gte,
           with_genres

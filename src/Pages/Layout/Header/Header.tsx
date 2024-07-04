@@ -7,7 +7,6 @@ import { AppDispatch } from "../../../Redux/store.ts";
 import { selectGenreListResponse } from "../../../Redux/Slices/GenreList/getGenreList.selector.ts";
 import { getGenreListAction } from "../../../Redux/Slices/GenreList/getGenreList.slice.ts";
 import { getMovieData } from "../../../Redux/Slices/MovieList/getMovieData.slice.ts";
-import useLoader from "../../../Hooks/useLoader.ts";
 import { setFilterData } from "../../../Redux/Slices/filterSlice/filter.slice.ts";
 
 interface HeaderProps {
@@ -46,6 +45,7 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
           setActiveTab={(recIndexArr) => {
             startLoading();
             if (recIndexArr.includes(0)) {
+              dispatch(setFilterData([]));
               dispatch(getMovieData({})).finally(() => stopLoading());
             } else {
               let idString = recIndexArr.map(
@@ -56,6 +56,7 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
 
               dispatch(
                 getMovieData({
+                  primary_release_year: 2012,
                   with_genres: idString.join(","),
                 })
               ).finally(() => stopLoading());

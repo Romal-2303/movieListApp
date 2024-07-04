@@ -6,6 +6,11 @@
   max-height: calc(100vh - 120px - 3rem);
   font-family: $font-secondary;
 
+  .sentinel {
+    // height: 30px;
+    // border: 1px solid red;
+  }
+
   .movies-list-container {
     display: flex;
     flex-wrap: wrap;
@@ -23,5 +28,8 @@
     color: $font-primary-color;
     margin-left: 1rem;
     letter-spacing: 1px;
+  }
+
+  .sentinel-bottom {
   }
 }
