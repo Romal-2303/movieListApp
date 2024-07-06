@@ -27,16 +27,17 @@
       margin-left: 1rem;
       margin-right: 0.6rem;
       position: relative;
+
       input {
         border: 1px solid black;
         outline: none;
         height: 20px;
         width: 140px;
+        border-radius: 4px;
       }
 
       input:focus {
         border: 1px solid $secondary-color;
-        border-radius: 4px;
       }
 
       .search-icon-container {

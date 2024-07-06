@@ -1,7 +1,5 @@
 import React from "react";
 import Layout from "./Pages/Layout/Layout.tsx";
-import MainContent from "./Pages/MainContent/MainContent.tsx";
-import styles from "./DesignSystem/_classes.module.scss";
 import classes from "./App.module.scss";
 import useLoader from "./Hooks/useLoader.ts";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";

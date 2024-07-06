@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import classes from "./Header.module.scss";
 import { ReactComponent as Logo } from "../../../assets/icons/logo.svg";
 import { ReactComponent as SearchIcon } from "../../../assets/icons/searchIcon.svg";
@@ -26,56 +26,94 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
   const [genreList, setGenreList] = useState([]);
   const [activeTab, setActiveTab] = useState<number[]>([0]);
   const [inputMovie, setInputMovie] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<any>([]);
   const [inputDialog, setInputDialog] = useState(false);
   const [suggestionLoading, setSuggestionLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+  const sentinelRef = useRef(null);
+  const suggestionRef = useRef<HTMLDivElement>(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
     dispatch(getGenreListAction({}));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    let tempGenreList = genreListData
-      ? genreListData?.genres?.map((el) => el.name)
-      : [];
-
+    let tempGenreList = genreListData?.genres?.map((el) => el.name) || [];
     setGenreList(tempGenreList);
   }, [genreListData]);
 
-  const searchClickHandler = (receivedId) => () => {
-    console.log(receivedId);
-    setInputDialog(false);
-    setSuggestions([]);
-    navigate(`/MovieDetails/${receivedId}`);
-  };
-
-  const valueChangeHandler = (event) => {
-    const { value } = event.target;
-    setInputMovie(value);
-    setSuggestionLoading(true);
-
-    // Debounce the search callback
-    handleSearch(value);
-  };
-
-  const handleSearch = useDebounce((movie) => {
-    setInputDialog(true);
-    // curl -X GET "https://api.themoviedb.org/3/search/movie?api_key=YOUR_API_KEY&query=Inception"
-
+  const fetchDataFunc = (movie: string, page: number, mode: string) => {
     fetchData(
-      `https://api.themoviedb.org/3/search/movie?api_key=2dca580c2a14b55200e784d157207b4d&query=${movie}`
+      `https://api.themoviedb.org/3/search/movie?api_key=2dca580c2a14b55200e784d157207b4d&query=${movie}&page=${page}`
     )
       .then((data: any) => {
-        console.log(data?.results);
-        setSuggestions(data?.results);
+        if (mode === "start_new") {
+          setSuggestions((prevArr) => {
+            return [...data?.results];
+          });
+        } else {
+          setSuggestions((prevArr) => {
+            return [...prevArr, ...data?.results];
+          });
+        }
       })
       .catch((err) => {})
       .finally(() => {
         setSuggestionLoading(false);
       });
+  };
 
-    console.log("Searching for:", movie);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setPageNumber((prev) => {
+            fetchDataFunc(inputMovie, prev + 1, "continue");
+            return prev + 1;
+          });
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (sentinelRef.current) observer.observe(sentinelRef.current);
+
+    return () => {
+      if (sentinelRef.current) observer.unobserve(sentinelRef.current);
+    };
+  }, [sentinelRef.current, inputMovie]);
+
+  const searchClickHandler = (receivedId) => () => {
+    setInputDialog(false);
+    setSuggestions([]);
+    setInputMovie("");
+    navigate(`/MovieDetails/${receivedId}`);
+  };
+
+  const handleSearch = useDebounce((movie) => {
+    setInputDialog(true);
+    setSuggestions([]);
+    setPageNumber(1);
+    fetchDataFunc(movie, 1, "start_new");
   }, 500);
+
+  const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputMovie(event.target.value);
+    setSuggestionLoading(true);
+
+    // Debounce the search callback
+    handleSearch(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!isMouseDown) {
+      setInputDialog(false);
+      setSuggestions([]);
+    }
+  };
 
   return (
     <div className={classes["header-container"]}>
@@ -83,11 +121,16 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
         <div className={classes["header-logo-container"]}>
           <Logo />
         </div>
-        <div className={classes["header-input-container"]}>
+        <div
+          className={classes["header-input-container"]}
+          onMouseDown={() => setIsMouseDown(true)}
+          onMouseUp={() => setIsMouseDown(false)}
+        >
           <input
             value={inputMovie}
             onChange={valueChangeHandler}
             placeholder="Search"
+            onBlur={handleBlur}
           />
           <div
             className={classes["search-icon-container"]}
@@ -104,6 +147,7 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
                     key={index}
                     className={classes["suggestion-item"]}
                     onClick={searchClickHandler(el.id)}
+                    ref={suggestionRef}
                   >
                     <div className={classes["suggestion-item-image-container"]}>
                       <img
@@ -130,6 +174,13 @@ const Header = ({ startLoading, stopLoading }: HeaderProps) => {
                   <Loader color="black" height="30px" width="30px" />
                 </div>
               )}
+              <div ref={sentinelRef} className={classes[""]}>
+                {!suggestionLoading && suggestions?.length > 0 && (
+                  <div className={classes["loader-container"]}>
+                    <Loader color="black" height="30px" width="30px" />
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -28,7 +28,6 @@ const MainContent = ({
 }: MainContentProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [moviesDataObj, setMoviesDataObj] = useState<any>({});
-  const [anchorYear, setAnchorYear] = useState(2012);
   const [anchorYearTop, setAnchorYearTop] = useState(2012);
   const [anchorYearBottom, setAnchorYearBottom] = useState(2012);
   const [fetchMode, setFetchMode] = useState<string>("top");
@@ -99,7 +98,6 @@ const MainContent = ({
     }, 100);
     setAnchorYearBottom(2012);
     setAnchorYearTop(2012);
-    setAnchorYear(2012);
   }, [tempFilterData]);
 
   useEffect(() => {
@@ -114,12 +112,11 @@ const MainContent = ({
     const observerTop = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !initialLoadTop.current) {
+          startLoading();
           setAnchorYearTop((prev) => {
             return prev - 1;
           });
-          setAnchorYear((prev) => {
-            return prev - 1;
-          });
+
           setFetchMode("top");
         }
         initialLoadTop.current = false;
@@ -145,9 +142,7 @@ const MainContent = ({
           setAnchorYearBottom((prev) => {
             return prev < 2024 ? prev + 1 : prev;
           });
-          setAnchorYear((prev) => {
-            return prev < 2024 ? prev + 1 : prev;
-          });
+
           setFetchMode("bottom");
         }
         initialLoad.current = false;
@@ -184,8 +179,6 @@ const MainContent = ({
     [genreIdToName]
   );
 
-  console.log(anchorYearTop);
-
   return (
     <div
       className={`${classes["main-content-container"]} ${styles["hide-scrollbar"]}`}
@@ -198,6 +191,7 @@ const MainContent = ({
           </div>
         )}
       </div>
+
       {moviesDataObj &&
         Object.entries(moviesDataObj)?.map(([year, movies]: any) => (
           <React.Fragment key={year}>
@@ -214,18 +208,20 @@ const MainContent = ({
             )}
             <div className={`${classes["movies-list-container"]}`}>
               {movies &&
-                getMoviesWithGenres(movies).map((movie: any) => (
-                  <div key={movie.id}>
-                    <Card
-                      movieId={movie?.id}
-                      image={movie?.poster_path}
-                      ratings={movie?.vote_average}
-                      title={movie?.title}
-                      desc={movie?.overview}
-                      genres={movie?.genres_text}
-                    />
-                  </div>
-                ))}
+                getMoviesWithGenres(movies).map((movie: any) => {
+                  return (
+                    <div key={movie.id}>
+                      <Card
+                        movieId={movie?.id}
+                        image={movie?.poster_path}
+                        ratings={movie?.vote_average}
+                        title={movie?.title}
+                        desc={movie?.overview}
+                        genres={movie?.genres_text}
+                      />
+                    </div>
+                  );
+                })}
             </div>
           </React.Fragment>
         ))}
