@@ -1,10 +1,10 @@
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, to install all the dependencies you can run:
 
 ### `npm install` or `npm install --force`
 
-To install all the dependencies
+To start the project in the development mode, please run :
 
 ### `npm start`
 
